@@ -129,6 +129,16 @@ var checkbox = function(name, schema, options) {
     }
 };
 
+var binary = function(name, schema, options) {
+    if (stripNullType(schema.type) === 'binary') {
+        var f = stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'binary';
+        options.lookup[ObjectPath.stringify(options.path)] = f;
+        return f;
+    }
+};
+
 var select = function(name, schema, options) {
     if (stripNullType(schema.type) === 'string' && schema['enum']) {
         var f = stdFormObj(name, schema, options);
@@ -232,7 +242,8 @@ var defaults = {
     integer: [integer],
     boolean: [checkbox],
     array:   [checkboxes, array],
-    date:    [date]
+    date:    [date],
+    binary: [binary]
 };
 
 function defaultFormDefinition(name, schema, options) {
@@ -402,9 +413,9 @@ function merge(schema, form, ignore, options, readonly) {
             }
         }
 
-        //If it has a titleMap make sure it's a list
+        //If it has a titleMap make sure to update it with latest enum and names
         if (obj.titleMap) {
-            obj.titleMap = canonicalTitleMap(obj.titleMap);
+            obj.titleMap = canonicalTitleMap(obj.schema.enumNames, obj.schema.enum);
         }
 
         //

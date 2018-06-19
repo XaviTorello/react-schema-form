@@ -26,9 +26,10 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash": "^4.16.6",
+    "notevil": "^1.1.0",
     "objectpath": "^1.2.1",
-    "tv4": "^1.2.7",
-    "notevil": "^1.1.0"
+    "react-dropzone": "^4.2.11",
+    "tv4": "^1.2.7"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
